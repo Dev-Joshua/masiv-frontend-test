@@ -53,6 +53,8 @@
       </div>
     </div>
   </div>
+
+  <h3 class="text-center my-6">By @Dev-Joshua</h3>
 </template>
 
 <!-- Logica para la implementacion de la calificaicon segun el comic que se muestra-->
