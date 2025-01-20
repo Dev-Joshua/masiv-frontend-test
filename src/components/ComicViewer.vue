@@ -1,3 +1,4 @@
+<!-- Este componente se encarga de mostrar las estrellas para calificar el comic-->
 <template>
   <div class="container mx-auto p-4 mt-4 flex flex-col items-center">
     <h1 class="text-3xl font-bold text-cyan-700">Random Comics</h1>
@@ -6,7 +7,7 @@
     </h6>
   </div>
   <div>
-    <div class="container mx-auto p-2 flex flex-col items-center mt-2">
+    <div class="container mx-auto p-6 flex flex-col items-center">
       <div class="flex flex-row justify-center">
         <button
           @click="getRandomComic"
@@ -47,18 +48,23 @@
           <p class="text-gray-600" style="margin-top: 20px">
             <b>Description:</b> <br />{{ comic.alt }}
           </p>
+          <StarRating v-if="comic.num" :comicNum="comic.num" />
         </div>
       </div>
     </div>
   </div>
 </template>
 
+<!-- Logica para la implementacion de la calificaicon segun el comic que se muestra-->
 <script>
 import axiosClient from "../utils/axios";
+import StarRating from "./StarRating.vue";
 
 export default {
   name: "ComicViewer",
-  components: {},
+  components: {
+    StarRating,
+  },
   data() {
     return {
       comic: {},
