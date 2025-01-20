@@ -1,3 +1,4 @@
+<!-- importO el componente ComicViewer y se renderiza en el template -->
 <script>
 import ComicViewer from "./components/ComicViewer.vue";
 
