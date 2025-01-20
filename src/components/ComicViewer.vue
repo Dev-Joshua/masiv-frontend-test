@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto p-4 mt-10 flex flex-col items-center">
+  <div class="container mx-auto p-4 mt-4 flex flex-col items-center">
     <h1 class="text-3xl font-bold text-cyan-700">Random Comics</h1>
     <h6 class="mt-2 text-gray-600">
       View your favorite comics at random and rate them as you like
@@ -9,6 +9,7 @@
     <div class="container mx-auto p-2 flex flex-col items-center mt-2">
       <div class="flex flex-row justify-center">
         <button
+          @click="getRandomComic"
           class="bg-black hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4 mb-2 rounded"
           style="transition: all 0.5s ease"
         >
@@ -23,22 +24,61 @@
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
         "
       >
-        <div class="flex flex-col items-center overflow-hidden p-4">
+        <div
+          class="flex flex-col items-center overflow-hidden p-4"
+          v-if="comic"
+        >
           <div class="flex flex-row justify-between w-full">
             <h2 class="text-3xl text-center font-bold my-4 text">
-              Comic Title
+              {{ comic.title }}
             </h2>
             <div>
-              <p>Comic Number</p>
-              <p>Comic Year</p>
+              <p>
+                #<b>{{ comic.num }}</b>
+              </p>
+              <p><b>Year:</b>{{ comic.year }}</p>
             </div>
           </div>
-          <img src="" alt="" />Comic Image
+          <img
+            :src="comic.img"
+            :alt="comic.title"
+            class="w-full object-contain"
+          />
           <p class="text-gray-600" style="margin-top: 20px">
-            Comic Description
+            <b>Description:</b> <br />{{ comic.alt }}
           </p>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import axiosClient from "../utils/axios";
+
+export default {
+  name: "ComicViewer",
+  components: {},
+  data() {
+    return {
+      comic: {},
+    };
+  },
+  created() {
+    this.getRandomComic();
+  },
+  methods: {
+    async getRandomComic() {
+      try {
+        const randomComicNumber = Math.floor(Math.random() * 2500);
+        const response = await axiosClient.get(
+          `/${randomComicNumber}/info.0.json`
+        );
+        this.comic = response.data;
+      } catch (error) {
+        console.error("Failed to fetch comic", error);
+      }
+    },
+  },
+};
+</script>
